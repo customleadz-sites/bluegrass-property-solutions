@@ -16,6 +16,15 @@
     });
   }
 
+  // ── before / after sliders ──────────────────────────────
+  document.querySelectorAll('.ba').forEach(function (ba) {
+    var range = ba.querySelector('.ba-range');
+    if (!range) return;
+    var set = function () { ba.style.setProperty('--pos', range.value + '%'); };
+    range.addEventListener('input', set);
+    set();
+  });
+
   // ── estimate form (Web3Forms) ───────────────────────────
   var form = document.getElementById('estimate-form');
   if (!form) return;

@@ -28,13 +28,9 @@
     maxZoom: 14,
     zoomControl: false,
     zoomSnap: 0.1, // integer snapping leaves the service area floating in dead space
-    scrollWheelZoom: false // don't hijack the page scroll
+    scrollWheelZoom: true // wheel zoom on by default (client request), plus buttons below
   });
   L.control.zoom({ position: 'topright' }).addTo(map);
-
-  // click to enable wheel zoom, blur to release
-  map.on('click', function () { map.scrollWheelZoom.enable(); });
-  map.on('mouseout', function () { map.scrollWheelZoom.disable(); });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',

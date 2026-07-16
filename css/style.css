@@ -609,3 +609,172 @@ p{text-wrap:pretty}
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .hero-copy>*{opacity:1;transform:none}
 }
+
+/* ==========================================================================
+   v2 — full-bleed photo heroes, before/after slider, square map split.
+   These override the earlier .hero / .map-sec rules (later cascade wins).
+   ========================================================================== */
+
+/* ── full-bleed photo hero ───────────────────────────────── */
+.hero{
+  position:relative;
+  min-height:clamp(540px,82vh,780px);
+  display:flex;align-items:center;
+  background:var(--navy-deep);
+  overflow:hidden;
+  border-bottom:none;
+}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 60%}
+/* navy wash so white type always reads; heavier on the left where copy sits */
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(7,27,52,.92) 0%,rgba(7,27,52,.74) 34%,rgba(7,27,52,.32) 66%,rgba(7,27,52,.12) 100%),
+    linear-gradient(0deg,rgba(7,27,52,.6) 0%,transparent 42%);
+}
+.hero-inner{
+  position:relative;z-index:2;width:100%;
+  padding-block:clamp(48px,7vw,96px);
+  display:flex;flex-direction:column;align-items:flex-start;gap:22px;
+  max-width:var(--wrap);margin-inline:auto;
+}
+.hero-inner>*{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.75,.3,1) forwards}
+.hero-inner>*:nth-child(1){animation-delay:.06s}
+.hero-inner>*:nth-child(2){animation-delay:.16s}
+.hero-inner>*:nth-child(3){animation-delay:.26s}
+.hero-inner>*:nth-child(4){animation-delay:.36s}
+.hero-inner>*:nth-child(5){animation-delay:.46s}
+.hero-inner h1{color:#fff;max-width:16ch}
+.hero-inner h1 em{font-style:normal;color:var(--green);display:block}
+.hero-inner .lede{color:rgba(255,255,255,.86);max-width:52ch}
+.hero-inner .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-badges{
+  list-style:none;display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:6px;
+}
+.hero-badges li{
+  display:flex;align-items:center;gap:9px;
+  font-size:14px;color:rgba(255,255,255,.82);
+  font-family:var(--display);font-weight:600;font-stretch:104%;
+}
+.hero-badges li::before{
+  content:"";width:8px;height:8px;flex:none;border-radius:1px;
+  background:var(--green);transform:rotate(45deg);
+}
+.hero .swatch{position:absolute;bottom:0;left:0;right:0;z-index:3}
+@media (max-width:640px){
+  .hero{min-height:0;padding-top:8px}
+  .hero-bg img{object-position:center 45%}
+  .hero-inner{padding-block:56px 64px}
+  .hero-badges{gap:8px 16px}
+}
+
+/* interior page hero — same treatment, a touch shorter, uses .phead markup */
+.phead.img-head{position:relative;overflow:hidden;background:var(--navy-deep);min-height:clamp(340px,52vh,480px);display:flex;align-items:center}
+.phead.img-head::before{display:none}
+.phead .phead-bg{position:absolute;inset:0;z-index:0}
+.phead .phead-bg img{width:100%;height:100%;object-fit:cover;object-position:center 55%}
+.phead .phead-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(7,27,52,.9) 0%,rgba(7,27,52,.7) 40%,rgba(7,27,52,.34) 100%),
+             linear-gradient(0deg,rgba(7,27,52,.55),transparent 46%);
+}
+.phead.img-head .phead-in{position:relative;z-index:2}
+.phead h1 em{font-style:normal;color:var(--green);display:block}
+
+/* ── before / after slider ───────────────────────────────── */
+.ba{
+  position:relative;width:100%;aspect-ratio:3/2;
+  border-radius:3px;overflow:hidden;background:var(--navy-deep);
+  box-shadow:var(--shadow-lg);
+  user-select:none;touch-action:pan-y;
+  isolation:isolate;
+}
+.ba img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  pointer-events:none;display:block;
+}
+.ba-after{z-index:1}
+/* the before layer sits on top and is clipped from the right to the slider pos */
+.ba-before{z-index:2;clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0);will-change:clip-path}
+.ba-line{
+  position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;background:#fff;z-index:4;
+  transform:translateX(-50%);box-shadow:0 0 0 1px rgba(7,27,52,.25);pointer-events:none;
+}
+.ba-grip{
+  position:absolute;top:50%;left:var(--pos,50%);z-index:5;
+  width:46px;height:46px;border-radius:50%;
+  background:#fff;border:3px solid var(--green);
+  transform:translate(-50%,-50%);pointer-events:none;
+  display:grid;place-items:center;
+  box-shadow:0 8px 22px -6px rgba(7,27,52,.6);
+}
+.ba-grip::before,.ba-grip::after{
+  content:"";position:absolute;width:0;height:0;border-block:6px solid transparent;
+}
+.ba-grip::before{left:9px;border-right:8px solid var(--navy)}
+.ba-grip::after{right:9px;border-left:8px solid var(--navy)}
+.ba-range{
+  position:absolute;inset:0;width:100%;height:100%;z-index:6;margin:0;
+  opacity:0;cursor:ew-resize;
+}
+.ba-range:focus-visible + .ba-line{outline:3px solid var(--blue);outline-offset:2px}
+.ba-tag{
+  position:absolute;bottom:16px;z-index:3;
+  font-family:var(--display);font-weight:700;font-stretch:110%;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#fff;
+  background:rgba(7,27,52,.7);padding:7px 12px;border-radius:2px;
+  backdrop-filter:blur(3px);pointer-events:none;
+}
+.ba-tag-before{left:16px}
+.ba-tag-after{right:16px}
+.ba-cap{
+  margin-top:16px;font-size:14px;color:var(--ink-soft);
+  display:flex;align-items:center;gap:9px;
+}
+.ba-cap::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);flex:none}
+.sec.navy .ba-cap{color:rgba(255,255,255,.7)}
+
+/* ── square map + copy split ─────────────────────────────── */
+.map-split{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px);align-items:center;
+}
+.map-split .map-shell{
+  position:relative;width:100%;aspect-ratio:1/1;height:auto;
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;
+  box-shadow:var(--shadow-md);background:var(--paper-2);
+}
+.map-split #map{position:absolute;inset:0}
+.map-copy{display:flex;flex-direction:column;gap:16px}
+.map-copy .lede{margin-bottom:2px}
+.map-towns{
+  list-style:none;display:flex;flex-wrap:wrap;gap:8px;
+}
+.map-towns li{
+  font-size:13.5px;color:var(--navy);background:var(--paper-2);
+  padding:6px 12px;border-radius:2px;font-weight:500;
+  border:1px solid var(--rule);
+}
+.map-copy .btn{align-self:flex-start;margin-top:6px}
+@media (max-width:860px){
+  .map-split{grid-template-columns:1fr;gap:28px}
+  .map-split .map-shell{aspect-ratio:4/3}
+}
+
+/* ── in-prose photo strips (service pages) ───────────────── */
+.shots{
+  display:grid;gap:12px;margin:8px 0 4px;
+  grid-template-columns:repeat(3,1fr);
+}
+.shots.two{grid-template-columns:1fr 1fr}
+.shots figure{margin:0;border-radius:3px;overflow:hidden;position:relative;background:var(--navy-deep);box-shadow:var(--shadow-sm)}
+.shots img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;display:block;transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+.shots.two img{aspect-ratio:3/2}
+.shots figure:hover img{transform:scale(1.04)}
+.shots figcaption{
+  position:absolute;left:10px;bottom:9px;z-index:2;
+  font-family:var(--display);font-weight:700;font-stretch:108%;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;
+  background:rgba(7,27,52,.72);padding:5px 9px;border-radius:2px;backdrop-filter:blur(3px);
+}
+@media (max-width:620px){.shots{grid-template-columns:1fr 1fr;gap:8px}}

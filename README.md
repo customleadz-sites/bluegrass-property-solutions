@@ -19,10 +19,19 @@ Static multi-page site. No build step — plain HTML/CSS/JS, deploys straight to
    message telling people to call instead (it does **not** fail silently).
    Test a real submission after swapping it in.
 
-2. **Photos.** Every image on the site is a placeholder from Pexels. Tyler had no
-   job photos at intake. Before/after shots are the single biggest conversion
-   driver in this trade — the site will underperform until his real work is on it.
-   Swap the four `images/stock-*.jpg` files (same filenames = no code changes).
+2. **Photos.** The site now uses the photos Tyler provided (in `assets/photos/`),
+   processed into `site/images/`. A few notes:
+   - `images/this-one.jpg` is the one Tyler explicitly asked to keep.
+   - The home before/after slider uses `ba-before.jpg` / `ba-after.jpg` — Tyler's
+     `pressure washing/before.png` + `after.png` pair. Confirm these really are a
+     genuine before/after of one wash before leaning on the "same house" framing.
+   - `exterior pressure washing.png` is a genuine on-the-job photo (his washer +
+     ladder) — used on the home pressure-washing card.
+   - The exterior-painting page shows `painting-interior.jpg` captioned "hand-cut
+     lines" to illustrate finish quality, NOT to claim interior painting as a
+     service. If Tyler does want interior work advertised, say so explicitly.
+   - Source PNGs are large; `images/` holds web-optimized JPGs. To swap a photo,
+     replace the JPG of the same name (keep dimensions similar) — no code change.
 
 3. **Claims to confirm with Tyler.** Everything on the site is drawn from his
    intake answers, but these are promises he has to keep — get his sign-off:
@@ -92,11 +101,27 @@ only listed the first three counties.
 
 Town coordinates were geocoded via OpenStreetMap Nominatim (real, not estimated).
 
-Two things worth knowing if you edit it:
+The map lives in a **square panel on the left with copy on the right** (`.map-split`),
+not full-width. Mouse-wheel zoom is **on** plus the +/- buttons.
+
+Three things worth knowing if you edit it:
 - `zoomSnap: 0.1` — with default integer snapping the service area floats in a
   sea of dead space.
+- `scrollWheelZoom: true` — wheel zoom is intentional (client asked). If it ever
+  feels like it hijacks page scroll on a long page, that's the tradeoff.
 - The basemap label layer is **deliberately not loaded**. It renders its own town
   names which collide with the pins ("PADUCAH" stacked on "Paducah").
+
+## Heroes & before/after slider
+
+- Every page uses a **full-bleed photo hero** (`.hero` on home, `.phead.img-head`
+  on interior pages): background photo + navy gradient wash + white headline.
+  H1s are keyword-first (e.g. "Pressure Washing & House Washing in Western
+  Kentucky") — Tyler plans to refine wording; keep the keyword in the H1.
+- The home page's old "why paint fails" prep section was replaced with an
+  **interactive before/after slider** (`.ba` + `js/site.js`). It uses `clip-path`
+  driven by an invisible range input; works with mouse, touch, and keyboard.
+  It's one service (washing), so it no longer mixes painting and washing.
 
 ## Content notes
 
