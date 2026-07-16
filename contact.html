@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request a Free Estimate | Bluegrass Property Solutions</title>
+<meta name="description" content="Request a free written estimate for exterior painting, pressure washing or deck and fence staining in Western Kentucky. No obligation. Call (270) 978-7035, 8am–8pm.">
+<link rel="canonical" href="https://bluegrasspropertysolutionsllc.com/contact">
+<meta property="og:title" content="Request a Free Estimate | Bluegrass Property Solutions LLC">
+<meta property="og:description" content="Free written estimates for exterior painting and pressure washing across Western Kentucky.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="images/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/" aria-label="Bluegrass Property Solutions LLC — home">
+      <img src="images/logo-horizontal.png" alt="Bluegrass Property Solutions LLC" width="668" height="160">
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="service-exterior-painting">Exterior Painting</a></li>
+      <li><a href="service-pressure-washing">Pressure Washing</a></li>
+      <li><a href="service-deck-fence-staining">Deck &amp; Fence</a></li>
+      <li><a href="blog">Blog</a></li>
+      <li><a class="nav-tel" href="tel:+12709787035">(270) 978-7035</a></li>
+      <li><a class="btn nav-cta" href="contact" aria-current="page">Free Estimate</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="phead">
+    <div class="wrap phead-in">
+      <p class="crumb"><a href="/">Home</a> &nbsp;/&nbsp; Free Estimate</p>
+      <h1>Request a free estimate.</h1>
+      <p class="lede">Tell us about the property and we’ll come look at it properly. You get a written number, no obligation, and nobody hounding you afterwards.</p>
+    </div>
+    <div class="swatch inv" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap layout">
+      <div>
+        <form id="estimate-form" novalidate>
+          <!-- Web3Forms access key — see README.md -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+          <input type="hidden" name="subject" value="New estimate request — bluegrasspropertysolutionsllc.com">
+          <input type="hidden" name="from_name" value="Bluegrass Property Solutions Website">
+          <!-- honeypot: real people never fill this in -->
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required placeholder="Tyler Nightengale">
+            </div>
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="(270) 000-0000">
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="address">Property address</label>
+              <input id="address" name="address" type="text" autocomplete="street-address" required placeholder="Street, town">
+            </div>
+
+            <div class="field full">
+              <label for="service">What do you need?</label>
+              <select id="service" name="service" required>
+                <option value="" selected disabled>Choose a service…</option>
+                <option>Exterior house painting</option>
+                <option>Exterior trim painting</option>
+                <option>Garage painting</option>
+                <option>Commercial exterior painting</option>
+                <option>House washing / soft wash</option>
+                <option>Driveway, sidewalk or patio cleaning</option>
+                <option>Deck staining or sealing</option>
+                <option>Fence staining or painting</option>
+                <option>Property maintenance</option>
+                <option>More than one of these</option>
+                <option>Not sure — need advice</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="details">Project details</label>
+              <textarea id="details" name="details" required placeholder="Tell us what you're looking at — one story or two, what's failing, whether you're on a timeline. The more you tell us, the better the estimate."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="sqft">Approximate square footage <span class="opt">(if known)</span></label>
+              <input id="sqft" name="sqft" type="text" inputmode="numeric" placeholder="e.g. 1,800">
+            </div>
+            <div class="field">
+              <label for="color">Paint color <span class="opt">(optional)</span></label>
+              <input id="color" name="color" type="text" placeholder="Got one picked? Otherwise leave blank.">
+            </div>
+
+            <div class="field full">
+              <label for="photos">Photos <span class="opt">(optional — but they help a lot)</span></label>
+              <input id="photos" name="photos_note" type="text" placeholder="Send photos to (270) 978-7035 or the email below — mention it here.">
+            </div>
+
+            <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+
+            <div class="form-foot">
+              <button class="btn lg" type="submit">Get My Free Estimate</button>
+              <p class="form-note">Takes about two minutes. Free, no obligation, and we don’t sell your details to anybody.</p>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <aside class="aside">
+        <div class="card">
+          <div class="card-top" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <h3>Rather just call?</h3>
+          <p>Fair enough — it’s usually faster. The phone gets answered by the person who’ll be doing the work.</p>
+          <a class="btn" href="tel:+12709787035">Call (270) 978-7035</a>
+          <p style="font-size:13px">Open 8:00am – 8:00pm, seven days.</p>
+        </div>
+        <div class="card">
+          <div class="card-top" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <h3>Email</h3>
+          <p><a href="mailto:bluegrasspropertysolutionsky@gmail.com" style="color:var(--blue);word-break:break-word">bluegrasspropertysolutionsky@gmail.com</a></p>
+          <p>Photos of the job are welcome and genuinely speed things up — you’ll often get a much closer number before we even come out.</p>
+        </div>
+        <div class="card">
+          <div class="card-top" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <h3>Where we work</h3>
+          <p>Murray, Mayfield, Paducah, Benton, Fancy Farm, Arlington, Symsonia, Hickory, Wingo, Sedalia, Lowes — and across Graves, Calloway, Marshall, McCracken and Carlisle counties.</p>
+          <p>Near the edge of that? Ask anyway.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="images/logo-horizontal-light.png" alt="Bluegrass Property Solutions LLC" width="668" height="160" loading="lazy">
+        <p>Exterior painting, pressure washing and property maintenance across Western Kentucky. Clean. Protect. Transform.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="service-exterior-painting">Exterior Painting</a></li>
+          <li><a href="service-pressure-washing">Pressure Washing</a></li>
+          <li><a href="service-deck-fence-staining">Deck &amp; Fence Staining</a></li>
+          <li><a href="blog">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a class="foot-tel" href="tel:+12709787035">(270) 978-7035</a></li>
+          <li><a href="mailto:bluegrasspropertysolutionsky@gmail.com">bluegrasspropertysolutionsky@gmail.com</a></li>
+          <li><a href="contact">Request a free estimate</a></li>
+        </ul>
+        <p style="margin-top:12px">Open 8:00am – 8:00pm</p>
+      </div>
+    </div>
+    <p class="foot-areas">Serving Murray, Paducah, Mayfield, Benton, Fancy Farm, Arlington, Symsonia, Hickory, Wingo, Sedalia, Lowes and the surrounding communities of Graves, Calloway, Marshall, McCracken and Carlisle counties.</p>
+    <div class="foot-bar">
+      <span>&copy; 2026 Bluegrass Property Solutions LLC. All rights reserved.</span>
+      <span>Western Kentucky</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>
