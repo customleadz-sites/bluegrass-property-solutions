@@ -1,19 +1,25 @@
 /* Service-area map — Bluegrass Property Solutions
-   Murray, KY centred. Counties highlighted, towns pinned. Map only, no panel. */
+   Murray, KY centred. 80-mile service radius drawn, towns pinned inside. */
 (function () {
   var el = document.getElementById('map');
   if (!el || typeof L === 'undefined') return;
 
   var MURRAY = [36.6106, -88.3021];
+  var RADIUS_MILES = 80;
+  var RADIUS_M = RADIUS_MILES * 1609.344;
 
   // Towns Tyler listed, geocoded via OpenStreetMap Nominatim.
+  // At the 80-mile-radius zoom the towns cluster tightly, so only the
+  // well-spaced ones get a permanent label (lab:true) — the rest keep their
+  // pin and show the name on hover. All 11 are also listed in the chips beside
+  // the map. dir spreads permanent labels apart to avoid collisions.
   var TOWNS = [
-    { n: 'Murray',     c: [36.6106, -88.3021], hub: true },
-    { n: 'Paducah',    c: [37.0834, -88.6000] },
-    { n: 'Mayfield',   c: [36.7413, -88.6355] },
-    { n: 'Benton',     c: [36.8573, -88.3503] },
+    { n: 'Murray',     c: [36.6106, -88.3021], hub: true, lab: true, dir: 'right' },
+    { n: 'Paducah',    c: [37.0834, -88.6000], lab: true, dir: 'top' },
+    { n: 'Mayfield',   c: [36.7413, -88.6355], lab: true, dir: 'left' },
+    { n: 'Benton',     c: [36.8573, -88.3503], lab: true, dir: 'right' },
+    { n: 'Arlington',  c: [36.7903, -89.0128], lab: true, dir: 'left' },
     { n: 'Fancy Farm', c: [36.7995, -88.7914] },
-    { n: 'Arlington',  c: [36.7903, -89.0128] },
     { n: 'Symsonia',   c: [36.9203, -88.5200] },
     { n: 'Hickory',    c: [36.8226, -88.6475] },
     { n: 'Wingo',      c: [36.6423, -88.7390] },
@@ -23,11 +29,11 @@
 
   var map = L.map(el, {
     center: MURRAY,
-    zoom: 9,
-    minZoom: 7,
+    zoom: 8,
+    minZoom: 6,
     maxZoom: 14,
     zoomControl: false,
-    zoomSnap: 0.1, // integer snapping leaves the service area floating in dead space
+    zoomSnap: 0.1, // integer snapping leaves the circle floating in dead space
     scrollWheelZoom: true // wheel zoom on by default (client request), plus buttons below
   });
   L.control.zoom({ position: 'topright' }).addTo(map);
@@ -38,54 +44,40 @@
     maxZoom: 20
   }).addTo(map);
 
-  var BASE = { color: '#0D2C54', weight: 2, opacity: 1, fillColor: '#1E5FA8', fillOpacity: 0.16, lineJoin: 'round' };
-  var HOVER = { fillOpacity: 0.34, weight: 3 };
+  var BASE = { color: '#0D2C54', weight: 2, opacity: 1, fillColor: '#1E5FA8', fillOpacity: 0.12, lineJoin: 'round' };
+  var HOVER = { fillOpacity: 0.24, weight: 3 };
 
-  fetch('js/counties.json')
-    .then(function (r) { return r.json(); })
-    .then(function (geo) {
-      var counties = L.geoJSON(geo, {
-        style: function () { return BASE; },
-        onEachFeature: function (f, layer) {
-          layer.bindTooltip(f.properties.name + ' — Served', {
-            sticky: true, direction: 'top', className: 'county-tip', offset: [0, -6]
-          });
-          layer.on({
-            mouseover: function (e) { e.target.setStyle(HOVER); },
-            mouseout: function (e) { e.target.setStyle(BASE); }
-          });
-        }
-      }).addTo(map);
+  // 80-mile service radius around Murray
+  var circle = L.circle(MURRAY, Object.assign({ radius: RADIUS_M }, BASE)).addTo(map);
+  circle.bindTooltip('About ' + RADIUS_MILES + ' miles from Murray — Served', {
+    sticky: true, direction: 'top', className: 'county-tip', offset: [0, -6]
+  });
+  circle.on({
+    mouseover: function (e) { e.target.setStyle(HOVER); },
+    mouseout: function (e) { e.target.setStyle(BASE); }
+  });
 
-      // No basemap label layer on purpose: it renders its own town names, which
-      // collide with the pins below ("PADUCAH" stacked on "Paducah"). Our towns
-      // are the point of this map, so they're the only labels on it.
-      TOWNS.forEach(function (t) {
-        L.marker(t.c, {
-          icon: L.divIcon({
-            className: '',
-            html: '<div class="town-dot' + (t.hub ? ' is-hub' : '') + '">' + (t.hub ? '<i></i>' : '') + '<b></b></div>',
-            iconSize: [13, 13]
-          }),
-          zIndexOffset: t.hub ? 1000 : 500,
-          keyboard: false
-        })
-          .addTo(map)
-          .bindTooltip(t.n, {
-            permanent: true, direction: 'right', offset: [10, 0], className: 'town-label'
-          });
-      });
-
-      var HOME = counties.getBounds().pad(0.04);
-      map.fitBounds(HOME);
-      map.setMaxBounds(counties.getBounds().pad(0.6));
+  // No basemap label layer on purpose: it renders its own town names, which
+  // collide with the pins below ("PADUCAH" stacked on "Paducah"). Our towns
+  // are the point of this map, so they're the only labels on it.
+  var OFFSETS = { right: [10, 0], left: [-10, 0], top: [0, -10], bottom: [0, 12] };
+  TOWNS.forEach(function (t) {
+    var dir = t.dir || 'right';
+    L.marker(t.c, {
+      icon: L.divIcon({
+        className: '',
+        html: '<div class="town-dot' + (t.hub ? ' is-hub' : '') + '">' + (t.hub ? '<i></i>' : '') + '<b></b></div>',
+        iconSize: [13, 13]
+      }),
+      zIndexOffset: t.hub ? 1000 : 500,
+      keyboard: false
     })
-    .catch(function () {
-      // if the boundaries fail to load, still show the towns rather than an empty box
-      TOWNS.forEach(function (t) {
-        L.marker(t.c, {
-          icon: L.divIcon({ className: '', html: '<div class="town-dot"><b></b></div>', iconSize: [13, 13] })
-        }).addTo(map).bindTooltip(t.n, { permanent: true, direction: 'right', offset: [10, 0], className: 'town-label' });
+      .addTo(map)
+      .bindTooltip(t.n, {
+        permanent: !!t.lab, direction: dir, offset: OFFSETS[dir], className: 'town-label'
       });
-    });
+  });
+
+  map.fitBounds(circle.getBounds().pad(0.06));
+  map.setMaxBounds(circle.getBounds().pad(0.4));
 })();
