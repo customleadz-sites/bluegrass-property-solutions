@@ -68,7 +68,7 @@ h1,h2,h3,h4{
   font-stretch:112%;
   text-wrap:balance;
 }
-h1{font-size:clamp(38px,5.4vw,70px)}
+h1{font-size:clamp(34px,5.4vw,70px)}
 h2{font-size:clamp(30px,3.7vw,48px)}
 h3{font-size:clamp(19px,1.5vw,23px);letter-spacing:-.012em;font-stretch:105%}
 p{text-wrap:pretty}
@@ -322,11 +322,14 @@ p{text-wrap:pretty}
 }
 .chip-swatch img{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:.5;transition:transform .6s cubic-bezier(.2,.8,.3,1),opacity .4s;
+  opacity:1;transition:transform .6s cubic-bezier(.2,.8,.3,1);
 }
-.chip:hover .chip-swatch img{transform:scale(1.06);opacity:.62}
-.chip:nth-child(2) .chip-swatch{background:var(--blue)}
-.chip:nth-child(3) .chip-swatch{background:var(--green-deep)}
+.chip:hover .chip-swatch img{transform:scale(1.06)}
+/* full-color photo now; just a small bottom scrim so the label stays readable */
+.chip-swatch::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:64%;z-index:1;
+  background:linear-gradient(to top,rgba(7,27,52,.72),transparent);pointer-events:none;
+}
 .chip-swatch b{
   position:absolute;left:20px;bottom:16px;z-index:2;
   font-family:var(--display);font-weight:800;font-stretch:118%;
@@ -669,8 +672,8 @@ p{text-wrap:pretty}
 .hero-inner>*:nth-child(3){animation-delay:.26s}
 .hero-inner>*:nth-child(4){animation-delay:.36s}
 .hero-inner>*:nth-child(5){animation-delay:.46s}
-.hero-inner h1{color:#fff;max-width:16ch}
-.hero-inner h1 em{font-style:normal;color:var(--green);display:block}
+.hero-inner h1{color:#fff;max-width:18ch}
+.hero-inner h1 em{font-style:normal;color:var(--green);display:block;font-size:.54em;line-height:1.05;margin-top:.16em}
 .hero-inner .lede{color:rgba(255,255,255,.86);max-width:52ch}
 .hero-inner .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
 .hero-badges{
@@ -704,7 +707,7 @@ p{text-wrap:pretty}
              linear-gradient(0deg,rgba(7,27,52,.55),transparent 46%);
 }
 .phead.img-head .phead-in{position:relative;z-index:2}
-.phead h1 em{font-style:normal;color:var(--green);display:block}
+.phead h1 em{font-style:normal;color:var(--green);display:block;font-size:.54em;line-height:1.05;margin-top:.14em}
 
 /* ── before / after slider ───────────────────────────────── */
 .ba{
