@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bluegrasspropertysolutionsllc.com/sitemap.xml
+Sitemap: https://www.bluegrasspropertysolutionsllc.com/sitemap.xml
