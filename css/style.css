@@ -577,8 +577,9 @@ p{text-wrap:pretty}
 .card-top i:nth-child(4){background:var(--grey);flex:.8}
 
 /* ── blog ────────────────────────────────────────────────── */
-.posts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
-@media (max-width:760px){.posts{grid-template-columns:1fr}}
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+@media (max-width:900px){.posts{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.posts{grid-template-columns:1fr}}
 .post{
   background:var(--paper);padding:clamp(24px,2.6vw,34px);
   display:flex;flex-direction:column;gap:11px;text-decoration:none;color:inherit;
