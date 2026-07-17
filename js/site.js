@@ -46,10 +46,11 @@
     status.className = 'form-status';
     status.textContent = '';
 
+    // Submit as FormData (a CORS "simple" request) so no preflight is sent —
+    // sending JSON with a custom Content-Type triggers a preflight Web3Forms rejects.
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      body: new FormData(form)
     })
       .then(function (r) { return r.json(); })
       .then(function (data) {

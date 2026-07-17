@@ -11,13 +11,12 @@ Static multi-page site. No build step — plain HTML/CSS/JS, deploys straight to
 
 ## ⚠️ Before launch — outstanding items
 
-1. **Web3Forms access key.** `contact.html` has a placeholder:
-   ```html
-   <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
-   ```
-   Replace with the real key. Until then the form refuses to submit and shows a
-   message telling people to call instead (it does **not** fail silently).
-   Test a real submission after swapping it in.
+1. **Web3Forms — CONNECTED.** The estimate form is live and delivering to
+   Tyler's inbox (key set in `contact.html`, submitted as FormData in
+   `js/site.js`). Note: Web3Forms blocks headless/bot browsers, so automated
+   tests fail with a CORS/403 error even though real browsers work fine — test
+   from a normal browser, not a headless one.
+
 
 2. **Photos.** The site now uses the photos Tyler provided (in `assets/photos/`),
    processed into `site/images/`. A few notes:
