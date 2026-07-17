@@ -813,3 +813,57 @@ p{text-wrap:pretty}
 .ba-pair img{width:100%;height:100%;object-fit:cover;aspect-ratio:3/2;display:block}
 .ba-pair .ba-tag{position:absolute;left:14px;bottom:14px;right:auto}
 @media (max-width:620px){.ba-pair{grid-template-columns:1fr;gap:12px}}
+
+/* ==========================================================================
+   Mobile refinements — tighter rhythm, less redundancy, cleaner flow on phones
+   ========================================================================== */
+@media (max-width:600px){
+  /* tighter vertical rhythm between sections (was ~66px each side) */
+  .sec{padding-block:44px}
+  .sec-head{margin-bottom:24px;gap:12px}
+
+  /* headings sit better on a narrow column */
+  h2{font-size:26px}
+  h3{font-size:18px}
+
+  /* a cleaner reading column */
+  body{font-size:16px;line-height:1.58}
+  .lede{font-size:16px;line-height:1.55}
+
+  /* hero: drop the eyebrow (it just repeats the H1) and tighten the stack */
+  .hero .eyebrow{display:none}
+  .hero-inner{gap:15px;padding-block:44px 52px}
+  .hero-badges{gap:7px 16px}
+  .phead-in{gap:13px}
+
+  /* trust strip: shorter, less of a tall stack */
+  .trust-item{padding:16px 2px}
+  .trust-item b{font-size:14.5px}
+  .trust-item span{font-size:13px;line-height:1.4}
+
+  /* what-we-do cards: trim the padding */
+  .chip-body{padding:19px 18px 21px;gap:9px}
+  .chip-body p{font-size:14.5px}
+
+  /* answers: tighten each Q&A */
+  .qa-item{padding:19px 2px}
+  .qa-item h3{margin-bottom:6px}
+  .qa-item p{font-size:14.3px;line-height:1.5}
+
+  /* service-page prose: closer rhythm through the long copy */
+  .prose{gap:14px}
+  .prose p{font-size:15.5px}
+  .prose ul{gap:7px}
+  .prose ul li{font-size:15px}
+  .steps li{padding:13px 0;gap:13px}
+  .steps p{font-size:14px}
+  .steps dt,.steps b{font-size:15.5px}
+
+  /* map copy: rein in the big heading + spacing */
+  .map-copy{gap:13px}
+  .map-towns{gap:6px}
+  .map-towns li{font-size:12.5px;padding:5px 10px}
+
+  /* closing CTA band: tighter */
+  .band-in{padding-block:44px}
+}
