@@ -456,6 +456,8 @@ p{text-wrap:pretty}
   position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--navy);
   animation:ping 3s cubic-bezier(.2,.6,.3,1) infinite;
 }
+/* edge / reach markers — muted, hollow, secondary to the green service towns */
+.town-dot.is-edge b{background:var(--paper);border:2px solid var(--grey);width:8px;height:8px;box-shadow:0 1px 4px -1px rgba(13,44,84,.4)}
 @keyframes ping{0%{transform:scale(.5);opacity:.85}75%,100%{transform:scale(2.6);opacity:0}}
 .town-label{
   background:none!important;border:none!important;box-shadow:none!important;padding:0!important;
@@ -465,6 +467,7 @@ p{text-wrap:pretty}
   text-shadow:0 0 4px var(--paper-2),0 0 8px var(--paper-2),0 0 12px var(--paper-2)!important;
 }
 .town-label::before{display:none!important}
+.town-label-edge{color:var(--grey)!important;font-weight:600!important;font-size:10px!important}
 
 /* ── cta band ────────────────────────────────────────────── */
 .band{

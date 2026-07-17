@@ -5,14 +5,14 @@
   if (!el || typeof L === 'undefined') return;
 
   var MURRAY = [36.6106, -88.3021];
-  var RADIUS_MILES = 80;
+  var RADIUS_MILES = 60;
   var RADIUS_M = RADIUS_MILES * 1609.344;
 
-  // Towns Tyler listed, geocoded via OpenStreetMap Nominatim.
-  // At the 80-mile-radius zoom the towns cluster tightly, so only the
-  // well-spaced ones get a permanent label (lab:true) — the rest keep their
-  // pin and show the name on hover. All 11 are also listed in the chips beside
-  // the map. dir spreads permanent labels apart to avoid collisions.
+  // Towns Tyler listed (green pins), geocoded via OpenStreetMap Nominatim.
+  // At this zoom the core towns cluster tightly, so only the well-spaced ones
+  // get a permanent label (lab:true) — the rest keep their pin and show the
+  // name on hover. All are also listed in the chips beside the map. dir spreads
+  // permanent labels apart to avoid collisions.
   var TOWNS = [
     { n: 'Murray',     c: [36.6106, -88.3021], hub: true, lab: true, dir: 'right' },
     { n: 'Paducah',    c: [37.0834, -88.6000], lab: true, dir: 'top' },
@@ -24,7 +24,16 @@
     { n: 'Hickory',    c: [36.8226, -88.6475] },
     { n: 'Wingo',      c: [36.6423, -88.7390] },
     { n: 'Sedalia',    c: [36.6412, -88.6053] },
-    { n: 'Lowes',      c: [36.8856, -88.7739] }
+    { n: 'Lowes',      c: [36.8856, -88.7739] },
+    // Edge markers (muted) — real towns near the 60-mile ring, spread around the
+    // compass so people can see roughly how far the radius reaches.
+    // perimeter labels point inward (toward Murray) so they stay in frame
+    { n: 'Princeton',   c: [37.1092, -87.8820], edge: true, lab: true, dir: 'top' },
+    { n: 'Hopkinsville', c: [36.8658, -87.4894], edge: true, lab: true, dir: 'left' },
+    { n: 'Clarksville', c: [36.5278, -87.3589], edge: true, lab: true, dir: 'left' },
+    { n: 'Huntingdon',  c: [36.0009, -88.4280], edge: true, lab: true, dir: 'top' },
+    { n: 'Union City',  c: [36.4242, -89.0570], edge: true, lab: true, dir: 'right' },
+    { n: 'Cairo',       c: [37.0058, -89.1772], edge: true, lab: true, dir: 'right' }
   ];
 
   var map = L.map(el, {
@@ -63,18 +72,20 @@
   var OFFSETS = { right: [10, 0], left: [-10, 0], top: [0, -10], bottom: [0, 12] };
   TOWNS.forEach(function (t) {
     var dir = t.dir || 'right';
+    var cls = 'town-dot' + (t.hub ? ' is-hub' : '') + (t.edge ? ' is-edge' : '');
     L.marker(t.c, {
       icon: L.divIcon({
         className: '',
-        html: '<div class="town-dot' + (t.hub ? ' is-hub' : '') + '">' + (t.hub ? '<i></i>' : '') + '<b></b></div>',
+        html: '<div class="' + cls + '">' + (t.hub ? '<i></i>' : '') + '<b></b></div>',
         iconSize: [13, 13]
       }),
-      zIndexOffset: t.hub ? 1000 : 500,
+      zIndexOffset: t.hub ? 1000 : (t.edge ? 400 : 500),
       keyboard: false
     })
       .addTo(map)
       .bindTooltip(t.n, {
-        permanent: !!t.lab, direction: dir, offset: OFFSETS[dir], className: 'town-label'
+        permanent: !!t.lab, direction: dir, offset: OFFSETS[dir],
+        className: t.edge ? 'town-label town-label-edge' : 'town-label'
       });
   });
 
