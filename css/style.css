@@ -427,6 +427,9 @@ p{text-wrap:pretty}
   height:clamp(440px,74vh,720px);
   border-top:1px solid var(--rule);
   background:var(--paper-2);
+  /* own stacking context so Leaflet's controls (z-index 1000) stay trapped
+     inside the map and slide under the sticky header instead of on top of it */
+  isolation:isolate;
 }
 #map{position:absolute;inset:0;background:var(--paper-2)}
 .map-shell::after{ /* settle the tiles into the page */
