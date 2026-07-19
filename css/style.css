@@ -32,7 +32,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--paper)}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -144,8 +144,17 @@ p{text-wrap:pretty}
 .nav{
   position:sticky;top:0;z-index:900;
   background:rgba(247,246,243,.93);
+  -webkit-backdrop-filter:blur(12px);
   backdrop-filter:blur(12px);
   border-bottom:1px solid var(--rule);
+}
+/* Solid fill above the sticky header. On iOS, overscrolling (rubber-banding)
+   at the top bounces the page down and opens a gap above the header where the
+   page used to show through. This bar is anchored to the header, so it moves
+   down with it and keeps that gap a solid color. */
+.nav::before{
+  content:"";position:absolute;left:0;right:0;bottom:100%;
+  height:100vh;background:var(--paper);pointer-events:none;
 }
 /* Three-part header: logo left, menu centered, actions (Free Estimate + phone)
    pinned right. Grid keeps the menu centered in the header without overlap. */
